@@ -1,0 +1,24 @@
+{
+  "name": "react-native-salute",
+  "version": "0.0.1",
+  "description": "Yet another toast module written in JS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bjarte Bore",
+  "license": "MIT",
+  "peerDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.4.0",
+    "eslint-config-airbnb": "^15.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^20.0.3",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0"
+  },
+  "dependencies": {
+    "hoist-non-react-statics": "^2.2.1"
+  }
+}
