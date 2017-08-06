@@ -6,6 +6,37 @@ import {
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import Toast from './Toast';
 
+
+
+const defaultState = {
+
+}
+
+const reducer = (state, action) => {
+
+  switch (action.type) {
+    case 'Toast/PUSH': {
+      return {
+        ...state,
+        index: [...state.index, action.payload.id],
+        toasts: {
+          ...state.toasts,
+          [action.payload.id]: action.payload,
+        }
+      }
+    }
+    case 'Toast/SHIFT': {
+      return {
+        ...state,
+        index: state.index.slice(1),
+      }
+    }
+    default: {
+      return state;
+    }
+  }
+}
+
 export default (WrappedComponent) => {
   class Toaster extends Component {
     static childContextTypes = {
@@ -13,7 +44,8 @@ export default (WrappedComponent) => {
     };
 
     state = {
-      toast: null,
+      index: [],
+      toasts: {},
     }
 
     getChildContext() {
@@ -23,20 +55,47 @@ export default (WrappedComponent) => {
       };
     }
 
-    addToast = () => {
-      this.setState({
-        toast: 'yeah',
+    addToast = (props = {}) => {
+      this.dispatch({
+        type: 'Toast/PUSH',
+        payload: {
+          ...props,
+          id: Math.random().toString(36),
+        }
       })
     }
 
+    dispatch = (action) => {
+      this.setState(
+        reducer(this.state, action)
+      )
+    }
+
+    getToasts() {
+      const { index, toasts } = this.state;
+      return index.map((id, idx) => ({
+        ...toasts[id],
+        visible: idx === 0,
+      }));
+    }
+
     renderToast() {
-      if (this.state.toast) {
-        return (<Toast
-          content={this.state.toast}
-          onPress={() => {}}
-        />)
-      }
-      return null;
+      return this.getToasts().map(
+        toast => (
+          toast.visible ?
+            <Toast
+              key={toast.id}
+              content={toast.text}
+              duration={toast.duration}
+              onHidden={() => {
+                this.dispatch({
+                  type: 'Toast/SHIFT'
+                })
+              }}
+              onPress={toast.onPress}
+            /> : null
+        )
+      )
     }
 
     render() {

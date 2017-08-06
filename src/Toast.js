@@ -5,6 +5,7 @@ import {
   Animated,
   StyleSheet,
   Text,
+  View,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -34,7 +35,7 @@ export default class Toast extends Component {
   }
 
   static defaultProps = {
-    duration: 5000,
+    duration: null,
     height: 100,
     onClick: null,
     onShow: noop,
@@ -54,6 +55,7 @@ export default class Toast extends Component {
   }
   componentDidMount() {
     this.show();
+
   }
 
   componentWillUnmount() {
@@ -72,9 +74,20 @@ export default class Toast extends Component {
     const { onPress } = this.props;
     if (onPress) {
       onPress(this.hide);
-    } else {
+    }
+  }
+
+
+  onVisible = () => {
+    // debugger;
+    if (this.props.duration) {
       setTimeout(this.hide, this.props.duration);
     }
+    this.props.onVisible();
+  }
+
+  onHidden = () => {
+    this.props.onHidden();
   }
 
   hide = () => {
@@ -86,7 +99,7 @@ export default class Toast extends Component {
     Animated.timing(
       this.state.animatedValue,
       { toValue: 0, duration: 350  }
-    ).start(() => this.props.onHidden());
+    ).start(() => this.onHidden());
   }
 
   show = () => {
@@ -98,7 +111,7 @@ export default class Toast extends Component {
     Animated.timing(
       this.state.animatedValue,
       { toValue: 1, duration: 350  }
-    ).start(() => this.props.onVisible());
+    ).start(() => this.onVisible());
   }
 
   renderContent() {
@@ -123,13 +136,16 @@ export default class Toast extends Component {
       zIndex: 9999,
       height: this.props.height,
       backgroundColor: 'green',
+      opacity: this.state.animatedValue,
       transform: [{ translateY: y }]
     };
 
     return (
       <Animated.View style={style}>
         <TouchableWithoutFeedback onPress={this.onPress}>
-          {this.renderContent()}
+          <View style={{flex: 1}}>
+            {this.renderContent()}
+          </View>
         </TouchableWithoutFeedback>
       </Animated.View>
     );
