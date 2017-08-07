@@ -40,7 +40,7 @@ const store = new Store({ index: [], salutes: {}},
 )
 
 export default (WrappedComponent) => {
-  class Commander extends Component {
+  class WithCommander extends Component {
     static childContextTypes = {
       addSalute: PropTypes.func,
     };
@@ -122,6 +122,6 @@ export default (WrappedComponent) => {
       );
     }
   }
-  hoistNonReactStatic(Commander, WrappedComponent);
-  return Commander;
+  hoistNonReactStatic(WithCommander, WrappedComponent);
+  return WithCommander;
 };
