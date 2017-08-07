@@ -12,7 +12,6 @@ const actions = {
   shift: 'Salute/SHIFT',
 };
 
-
 const store = new Store({ index: [], salutes: {}},
   (state, action) => {
     switch (action.type) {
@@ -106,6 +105,7 @@ export default (WrappedComponent) => {
           salute.visible ?
             <Salute
               key={salute.id}
+              styles={salute.styles}
               content={salute.text}
               duration={salute.duration}
               onHidden={() => {
