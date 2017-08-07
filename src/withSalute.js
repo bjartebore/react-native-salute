@@ -17,7 +17,7 @@ export default (WrappedComponent) => {
         addSalute,
       }
       return (
-        <WrappedComponent {props} />
+        <WrappedComponent {...props} />
       );
     }
   }

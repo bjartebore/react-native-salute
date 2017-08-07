@@ -39,6 +39,16 @@ const store = new Store({ index: [], salutes: {}},
   }
 )
 
+export const giveSalute = (props) => {
+  store.dispatch({
+    type: 'Salute/PUSH',
+    payload: {
+      ...props,
+      id: Math.random().toString(36),
+    }
+  })
+}
+
 export default (WrappedComponent) => {
   class WithCommander extends Component {
     static childContextTypes = {

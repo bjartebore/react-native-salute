@@ -52,11 +52,11 @@ export default class Salute extends Component {
     clearTimeout(this.state.timeoutRef);
   }
 
-  onAnimationEnd = (value) => {
+  onAnimationEnd = ({ value }) => {
     if (value === 0) {
-      this.props.onHidden();
+      this.onHidden();
     } else if (value === 1) {
-      this.props.onVisible();
+      this.onVisible();
     }
   }
 
@@ -89,7 +89,7 @@ export default class Salute extends Component {
     Animated.timing(
       this.state.animatedValue,
       { toValue: 0, duration: 350  }
-    ).start(() => this.onHidden());
+    ).start();
   }
 
   show = () => {
@@ -101,7 +101,7 @@ export default class Salute extends Component {
     Animated.timing(
       this.state.animatedValue,
       { toValue: 1, duration: 350  }
-    ).start(() => this.onVisible());
+    ).start();
   }
 
   renderContent() {
