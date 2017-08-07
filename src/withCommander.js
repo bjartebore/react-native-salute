@@ -115,7 +115,7 @@ export default (WrappedComponent) => {
         addSalute: this.addSalute,
       }
       return (
-        <View style={{ flex: 1, backgroundColor: 'blue' }}>
+        <View style={{ flex: 1 }}>
           <WrappedComponent {...props} />
           { this.renderSalutes() }
         </View>

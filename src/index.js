@@ -2,7 +2,7 @@ import withCommander from './withCommander';
 import withSalute from './withSalute';
 import styles from './styles';
 
-export default {
+export {
   withCommander,
   withSalute,
   styles,
