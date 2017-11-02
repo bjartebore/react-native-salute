@@ -15,7 +15,7 @@ export default class Salute extends Component {
   static propTypes = {
     duration: PropTypes.number,
     styles: PropTypes.object,
-    height: PropTypes.number,
+    minHeight: PropTypes.number,
     onShow: PropTypes.func,
     onVisible: PropTypes.func,
     onHide: PropTypes.func,
@@ -27,7 +27,7 @@ export default class Salute extends Component {
   static defaultProps = {
     duration: null,
     styles: styles.info,
-    height: 60,
+    minHeight: 60,
     onClick: null,
     onShow: noop,
     onVisible: noop,
@@ -119,7 +119,7 @@ export default class Salute extends Component {
   render() {
     const y = this.state.animatedValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [-this.props.height, 0],
+      outputRange: [-this.props.minHeight, 0],
     });
 
     const style ={
@@ -128,7 +128,7 @@ export default class Salute extends Component {
       top: 0,
       right: 0,
       zIndex: 9999,
-      height: this.props.height,
+      minHeight: this.props.minHeight,
       opacity: this.state.animatedValue,
       transform: [{ translateY: y }]
     };
