@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "eventemitter3": "^2.0.3",
-    "hoist-non-react-statics": "^2.2.1"
+    "hoist-non-react-statics": "^2.2.1",
+    "react": "^16.0.0"
   }
 }
