@@ -1,47 +1,65 @@
 
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
+import types from './types';
 
 export const base = {
   container: {
     flex: 1,
-    paddingTop: 25,
-    paddingRight: 15,
-    paddingBottom: 15,
-    paddingLeft: 15
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  textContainer: {
+    flex: 1,
   },
   text: {
     color: '#ffffff',
-    fontWeight: 'bold'
-  }
-}
+    fontWeight: 'bold',
+  },
+};
 
 export default {
-  info: StyleSheet.create({
-    container: {
-      ...base.container,
-      backgroundColor: '#2487DB',
-    },
-    text: base.text
-  }),
-  success: StyleSheet.create({
-    container: {
-      ...base.container,
-      backgroundColor: 'green',
-    },
-    text: base.text,
-  }),
-  warning: StyleSheet.create({
-    container: {
-      ...base.container,
-      backgroundColor: '#ec971f',
-    },
-    text: base.text
-  }),
-  error: StyleSheet.create({
+  [types.NO_STYLE]: StyleSheet.create({}),
+  [types.ERROR]: StyleSheet.create({
     container: {
       ...base.container,
       backgroundColor: 'red',
     },
-    text: base.text
+    iconContainer: base.iconContainer,
+    textContainer: base.textContainer,
+    text: base.text,
   }),
-}
+  [types.WARNING]: StyleSheet.create({
+    container: {
+      ...base.container,
+      backgroundColor: '#ec971f',
+    },
+    iconContainer: base.iconContainer,
+    textContainer: base.textContainer,
+    text: base.text,
+  }),
+  [types.SUCCESS]: StyleSheet.create({
+    container: {
+      ...base.container,
+      backgroundColor: 'green',
+    },
+    iconContainer: base.iconContainer,
+    textContainer: base.textContainer,
+    text: base.text,
+  }),
+  [types.INFO]: StyleSheet.create({
+    container: {
+      ...base.container,
+      backgroundColor: '#2487DB',
+    },
+    iconContainer: base.iconContainer,
+    textContainer: base.textContainer,
+    text: base.text,
+  }),
+};
