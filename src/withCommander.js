@@ -6,6 +6,7 @@ import {
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import Salute from './Salute';
 import Store from './Store';
+import { typeFromString } from './types';
 
 const actions = {
   push: 'Salute/PUSH',
@@ -105,8 +106,10 @@ export default (WrappedComponent) => {
           salute.visible ?
             <Salute
               key={salute.id}
-              styles={salute.styles}
+              type={typeFromString(salute.type)}
               content={salute.text}
+              icon={salute.icon}
+              styles={salute.styles}
               duration={salute.duration}
               onHidden={() => {
                 this.dispatch({

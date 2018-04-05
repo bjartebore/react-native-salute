@@ -6,28 +6,35 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
 } from 'react-native';
-import styles from './styles';
+import defaultStyles from './styles';
+import defaultIcons from './icons';
+import types from './types';
 
 const noop = () => {};
 
 export default class Salute extends Component {
   static propTypes = {
-    duration: PropTypes.number,
+    type: PropTypes.string,
+    content: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
+    icon: PropTypes.object,
     styles: PropTypes.object,
+    duration: PropTypes.number,
     minHeight: PropTypes.number,
     onShow: PropTypes.func,
     onVisible: PropTypes.func,
     onHide: PropTypes.func,
     onHidden: PropTypes.func,
     onPress: PropTypes.func,
-    content: PropTypes.oneOfType([PropTypes.string, PropTypes.node]).isRequired,
   }
 
   static defaultProps = {
+    type: types.INFO,
+    icon: null,
+    styles: defaultStyles.info,
     duration: null,
-    styles: styles.info,
-    minHeight: 60,
+    minHeight: 50,
     onClick: null,
     onShow: noop,
     onVisible: noop,
@@ -88,7 +95,7 @@ export default class Salute extends Component {
 
     Animated.timing(
       this.state.animatedValue,
-      { toValue: 0, duration: 350  }
+      { toValue: 0, duration: 350 },
     ).start();
   }
 
@@ -100,16 +107,30 @@ export default class Salute extends Component {
 
     Animated.timing(
       this.state.animatedValue,
-      { toValue: 1, duration: 350  }
+      { toValue: 1, duration: 350 },
     ).start();
   }
 
   renderContent() {
-    const { content, styles } = this.props;
+    const { type, content, styles, icon } = this.props;
+    const currentStyles = defaultStyles[type];
+    const currentIcon = defaultIcons[type];
+
+    const iconContainer = (icon || currentIcon) && (
+      <View style={[currentStyles.iconContainer, styles.iconContainer]}>
+        {icon || <Image source={currentIcon} />}
+      </View>
+    );
+
     if (Object.prototype.toString.call(content) === '[object String]') {
       return (
-        <View style={styles.container}>
-          <Text style={styles.text}>{content}</Text>
+        <View style={[currentStyles.container, styles.container]}>
+          {iconContainer}
+          <View style={[currentStyles.textContainer, styles.textContainer]}>
+            <Text style={[currentStyles.text, styles.text]}>
+              {content}
+            </Text>
+          </View>
         </View>
       );
     }
@@ -122,7 +143,7 @@ export default class Salute extends Component {
       outputRange: [-this.props.minHeight, 0],
     });
 
-    const style ={
+    const style = {
       position: 'absolute',
       left: 0,
       top: 0,
@@ -132,10 +153,6 @@ export default class Salute extends Component {
       opacity: this.state.animatedValue,
       transform: [{ translateY: y }]
     };
-
-    const {
-      styles,
-    } = this.props;
 
     return (
       <TouchableWithoutFeedback onPress={this.onPress}>
